@@ -9,10 +9,11 @@ export default (context, inject) => {
   const app = context.app;
   inject('openReplayTracker', () => {
     const config = app.$config.openreplay;
-    if (config.projectKey.length > 0) {
+    console.log('- - OpenReplay config : ', config);
+    if (config.projectKey.length < 0) {
       return false;
     }
-    console.log('Starting OpenReplay tracker...', config);
+    console.log('- - Starting OpenReplay tracker...', config);
     const getUserId =
       config?.userIdEnabled && config?.getUserId
         ? config.getUserId
@@ -28,7 +29,7 @@ export default (context, inject) => {
       tracker.setUserID(userId);
     }
     // const axiosOptions = {}
-    tracker.use(trackerAxios()); // check list of available options below
+    tracker.use(trackerAxios());
     tracker.start();
     return {
       tracker,
